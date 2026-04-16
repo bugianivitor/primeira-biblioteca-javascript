@@ -53,7 +53,8 @@ function limpaPalavras(palavra) {
 
 function separacaoParagrafos(texto){
   const paragrafos = texto.toLowerCase().split('\n')
-  const contagem = paragrafos.map((paragrafo) => {
+  const contagem = paragrafos.flatMap((paragrafo) => {
+    if (!paragrafo) return []
     return contadorDePalavras(paragrafo)
   })
   console.log(contagem);
