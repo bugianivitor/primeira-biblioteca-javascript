@@ -44,14 +44,22 @@ const link = caminhoArquivo[2];
 // O fs.readFile(caminho arquivo, funcao callback)
 
 fs.readFile(link, 'utf-8', (erro, texto) => {
-    contadorDePalavras(texto)
+    separacaoParagrafos(texto)
 });
 
-function contadorDePalavras(texto) {
-  const palavras = texto.split(' ');
+function separacaoParagrafos(texto){
+  const paragrafos = texto.toLowerCase().split('\n')
+  const contagem = paragrafos.map((paragrafo) => {
+    return contadorDePalavras(paragrafo)
+  })
+  console.log(contagem);
+}
+
+function contadorDePalavras(paragrafos) {
+  const palavras = paragrafos.split(' ');
   const quantidade = {}
   palavras.forEach(palavra => {
     quantidade[palavra] = (quantidade[palavra] || 0) + 1
   });
-  console.log(quantidade)
+  return quantidade
 }
