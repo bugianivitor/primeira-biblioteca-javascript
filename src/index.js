@@ -47,6 +47,10 @@ fs.readFile(link, 'utf-8', (erro, texto) => {
     separacaoParagrafos(texto)
 });
 
+function limpaPalavras(palavra) {
+  return palavra.replace(/[^a-zA-Z0-9]/g,'')
+}
+
 function separacaoParagrafos(texto){
   const paragrafos = texto.toLowerCase().split('\n')
   const contagem = paragrafos.map((paragrafo) => {
@@ -59,7 +63,10 @@ function contadorDePalavras(paragrafos) {
   const palavras = paragrafos.split(' ');
   const quantidade = {}
   palavras.forEach(palavra => {
-    quantidade[palavra] = (quantidade[palavra] || 0) + 1
+    if (palavras.length >= 3) {
+      const palavraLimpa = limpaPalavras(palavra)
+      quantidade[palavraLimpa] = (quantidade[palavraLimpa] || 0) + 1
+    }
   });
   return quantidade
 }
