@@ -1,3 +1,4 @@
+const trataErros = require('./erros/trataErros')
 const fs = require('fs'); // file system
 // documentacao da biblioteca: https://nodejs.org/api/fs.html#file-system
 // documentacao do metodo readFile: https://nodejs.org/api/fs.html#fsreadfilepath-options-callback
@@ -44,20 +45,29 @@ const link = caminhoArquivo[2];
 // O fs.readFile(caminho arquivo, funcao callback)
 
 fs.readFile(link, 'utf-8', (erro, texto) => {
-    separacaoParagrafos(texto)
+  try {
+    if (erro) throw erro
+    contaPalavras(texto);
+  } catch (erro) {
+    console.log(trataErros(erro))
+  }
 });
 
-function limpaPalavras(palavra) {
-  return palavra.replace(/[^a-zA-Z0-9]/g,'')
-}
-
-function separacaoParagrafos(texto){
-  const paragrafos = texto.toLowerCase().split('\n')
+function contaPalavras(texto) {
+  const paragrafos = extraiParagrafos(texto)
   const contagem = paragrafos.flatMap((paragrafo) => {
     if (!paragrafo) return []
     return contadorDePalavras(paragrafo)
   })
   console.log(contagem);
+}
+
+function extraiParagrafos(texto) {
+  return texto.toLowerCase().split('\n');
+}
+
+function limpaPalavras(palavra) {
+  return palavra.replace(/[^a-zA-Z0-9]/g,'')
 }
 
 function contadorDePalavras(paragrafos) {
