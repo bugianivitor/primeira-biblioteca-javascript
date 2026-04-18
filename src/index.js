@@ -1,3 +1,4 @@
+// coloca os dois imports em um novo arquivo cli.js
 const trataErros = require('./erros/trataErros')
 const fs = require('fs'); // file system
 // documentacao da biblioteca: https://nodejs.org/api/fs.html#file-system
@@ -52,6 +53,8 @@ fs.readFile(link, 'utf-8', (erro, texto) => {
     console.log(trataErros(erro))
   }
 });
+
+//ate aqui vai pro cli.js
 
 function contaPalavras(texto) {
   const paragrafos = extraiParagrafos(texto)
