@@ -1,6 +1,7 @@
 import fs from 'fs'
 import { trataErros } from './erros/trataErros.js';
 import { contaPalavras } from './index.js';
+import { montaSaidaArquivo } from './helpers.js'
 
 const caminhoArquivo = process.argv;
 const link = caminhoArquivo[2];
@@ -20,7 +21,7 @@ fs.readFile(link, 'utf-8', (erro, texto) => {
 // Linha de raciocínio. Executo uma função que recebe os dados, consiga ler ele e transforme em um arquivo de saída legível.
 async function criaESalvaArquivo(listaPalavras,endereco){
     const arquivoNovo = `${endereco}/resultado.txt`; // Concatena endereço com o nome do arquivo.
-    const textoPalavras = JSON.stringify(listaPalavras); //Transforma resultado em objeto de texto legível.
+    const textoPalavras = montaSaidaArquivo(listaPalavras); //Transforma resultado em objeto de texto legível.
     try { // Inicia tratamento de erro na parte mais crítica do código.
         await fs.promises.writeFile(arquivoNovo, textoPalavras);
         console.log('Arquivo criado');
