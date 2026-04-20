@@ -1,4 +1,5 @@
 import fs from 'fs'
+import path from 'path'
 import { trataErros } from './erros/trataErros.js';
 import { contaPalavras } from './index.js';
 import { montaSaidaArquivo } from './helpers.js'
@@ -18,25 +19,36 @@ program
             program.help();
             return
         }
+
+        const caminhoTexto = path.resolve(texto)
+        const caminhoDestino = path.resolve(destino)
+
+        try {
+            processaArquivo(caminhoTexto, caminhoDestino);
+            console.log('texto processado com sucesso');
+        } catch (erro) {
+            console.log('ocorreu um erro no processamento', erro)
+        }
     })
 
-const caminhoArquivo = process.argv;
-const link = caminhoArquivo[2];
-const endereco = caminhoArquivo[3]
+program.parse();
 
-fs.readFile(link, 'utf-8', (erro, texto) => {
-  try {
-    if (erro) throw erro
-    const resultado = contaPalavras(texto);
-    criaESalvaArquivo(resultado,endereco)
-  } catch (erro) {
-    console.log(trataErros(erro))
-  }
-});
+function processaArquivo(texto, destino) {
+    fs.readFile(link, 'utf-8', (erro, texto) => {
+        try {
+            if (erro) throw erro
+            const resultado = contaPalavras(texto);
+            criaESalvaArquivo(resultado, destino)
+        } catch (erro) {
+            trataErros(erro)
+        }
+    });
+}
+
 
 // Precisamos exportar os dados para um arquivo com resultados
 // Linha de raciocínio. Executo uma função que recebe os dados, consiga ler ele e transforme em um arquivo de saída legível.
-async function criaESalvaArquivo(listaPalavras,endereco){
+async function criaESalvaArquivo(listaPalavras, endereco) {
     const arquivoNovo = `${endereco}/resultado.txt`; // Concatena endereço com o nome do arquivo.
     const textoPalavras = montaSaidaArquivo(listaPalavras); //Transforma resultado em objeto de texto legível.
     try { // Inicia tratamento de erro na parte mais crítica do código.
