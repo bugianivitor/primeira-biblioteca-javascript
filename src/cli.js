@@ -4,6 +4,7 @@ import { trataErros } from './erros/trataErros.js';
 import { contaPalavras } from './index.js';
 import { montaSaidaArquivo } from './helpers.js'
 import { Command } from 'commander';
+import chalk from 'chalk';
 
 const program = new Command()
 
@@ -15,7 +16,7 @@ program
         const { texto, destino } = options;
 
         if (!texto || !destino) {
-            console.error('favor inserir caminho de origem e destino')
+            console.error(chalk.red('favor inserir caminho de origem e destino'))
             program.help();
             return
         }
@@ -25,7 +26,7 @@ program
 
         try {
             processaArquivo(caminhoTexto, caminhoDestino);
-            console.log('texto processado com sucesso');
+            console.log(chalk.green('texto processado com sucesso'));
         } catch (erro) {
             console.log('ocorreu um erro no processamento', erro)
         }
@@ -34,7 +35,7 @@ program
 program.parse();
 
 function processaArquivo(texto, destino) {
-    fs.readFile(link, 'utf-8', (erro, texto) => {
+    fs.readFile(texto, 'utf-8', (erro, texto) => {
         try {
             if (erro) throw erro
             const resultado = contaPalavras(texto);
