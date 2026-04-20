@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/bugianivitor/primeira-biblioteca-javascript/issues"
   },
-  "homepage": "https://github.com/bugianivitor/primeira-biblioteca-javascript#readme"
+  "homepage": "https://github.com/bugianivitor/primeira-biblioteca-javascript#readme",
+  "dependencies": {
+    "commander": "^14.0.3"
+  }
 }
